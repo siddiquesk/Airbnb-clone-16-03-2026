@@ -1,0 +1,123 @@
+<!-- NAVBAR -->
+<nav class="w-full bg-white border-b border-gray-200 fixed top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="/listings" class="flex items-center gap-2">
+      <i class="fa-brands fa-airbnb text-[#FF385C] text-2xl"></i>
+      <span class="text-[#FF385C] font-bold text-xl hidden sm:block">airbnb</span>
+    </a>
+
+    <!-- Search -->
+    <a href="/search"
+      class="hidden md:flex items-center gap-3 border border-gray-300 rounded-full px-5 py-2 shadow-sm hover:shadow-md transition bg-white">
+
+      <span class="text-sm font-semibold">Anywhere</span>
+      <span class="h-4 w-px bg-gray-300"></span>
+
+      <span class="text-sm font-semibold">Any week</span>
+      <span class="h-4 w-px bg-gray-300"></span>
+
+      <span class="text-sm text-gray-500">Add guests</span>
+
+      <span class="ml-2 bg-[#FF385C] p-2 rounded-full text-white">
+        <i class="fa-solid fa-magnifying-glass text-xs px-1"></i>
+      </span>
+    </a>
+
+    <!-- Right -->
+    <div class="flex items-center gap-2 relative">
+
+      <!-- Airbnb your home -->
+      <a href="/listings"
+        class="hidden md:block text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-100">
+        Airbnb your home
+      </a>
+
+      <!-- Profile Pill (Desktop Dropdown Trigger) -->
+      <button id="profileBtn"
+        class="hidden md:flex items-center gap-3 border border-gray-300 rounded-full px-3 py-1 hover:shadow-md">
+        <i class="fa-solid fa-bars text-sm"></i>
+        <i class="fa-solid fa-user-circle text-2xl text-gray-500"></i>
+      </button>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuBtn"
+        class="md:hidden p-2 rounded-full hover:bg-gray-100">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+
+      <!-- DESKTOP DROPDOWN -->
+      <div id="desktopMenu"
+        class="hidden absolute right-0 top-14 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-3">
+
+        <a href="/listings" class="block px-4 py-2 text-sm hover:bg-gray-100">Home</a>
+        <a href="/listings" class="block px-4 py-2 text-sm hover:bg-gray-100">Airbnb Listings</a>
+        <a href="/listings/new" class="block px-4 py-2 text-sm hover:bg-gray-100">Create New Listing</a>
+        <a href="/contact" class="block px-4 py-2 text-sm hover:bg-gray-100">Contact</a>
+
+        <hr class="my-2">
+
+        <a href="/login" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
+        <a href="/signup" class="block px-4 py-2 text-sm hover:bg-gray-100">Signup</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu"
+    class="hidden md:hidden bg-white border-t border-gray-200 px-6 py-5 space-y-5">
+
+    <a href="/listings" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-solid fa-house"></i> Home
+    </a>
+
+    <a href="/listings" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-brands fa-airbnb"></i> Airbnb Listings
+    </a>
+
+    <a href="/listings/new" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-solid fa-plus"></i> Create New Listing
+    </a>
+
+    <a href="/contact" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-solid fa-envelope"></i> Contact
+    </a>
+
+    <hr>
+
+    <a href="/login" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-solid fa-right-to-bracket"></i> Login
+    </a>
+
+    <a href="/signup" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-solid fa-user-plus"></i> Signup
+    </a>
+
+  </div>
+</nav>
+
+<!-- JS -->
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const profileBtn = document.getElementById("profileBtn");
+  const desktopMenu = document.getElementById("desktopMenu");
+
+  menuBtn?.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  profileBtn?.addEventListener("click", () => {
+    desktopMenu.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!profileBtn?.contains(e.target) && !desktopMenu?.contains(e.target)) {
+      desktopMenu?.classList.add("hidden");
+    }
+  });
+</script>
+
+<div class="h-24"></div>
