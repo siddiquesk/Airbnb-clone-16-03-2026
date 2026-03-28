@@ -1,6 +1,26 @@
 <% layout("/layout/boilerplate") %>
 
+<% if (success && success.length) { %>
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800">
+    <span class="text-center">✅ <%= success[0] %></span>
+    <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900 cursor-pointer">
+      ✕
+    </button>
+  </div>
+<% } %>
 
+<% if (error && error.length) { %>
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800">
+    <span>❌ <%= error[0] %></span>
+    <button
+      type="button"
+      onclick="this.parentElement.remove()"
+      class="cursor-pointer text-red-700 hover:text-red-900"
+    >
+      ✕
+    </button>
+  </div>
+<% } %>
   <!-- Page Heading -->
   <div class="text-center mb-0 md:mb-6 md:mt-4">
   <h1 class="text-3xl md:text-4xl font-semibold text-gray-900">
@@ -61,23 +81,15 @@
             <%= listing.description %>
           </p>
 
-          <%
-            const stayOptions = [
-              "Night",
-              "2 Days",
-              "3 Days",
-              "2 Nights",
-              "4 Nights",
-            ];
-          %>
+      
 
           <!-- Price -->
-          <p class="text-sm font-semibold text-black pt-1">
-            ₹ <%= listing.price %>
-            <span class="font-normal text-gray-500">
-              / <%= stayOptions[Math.floor(Math.random() * stayOptions.length)] %>
-            </span>
-          </p>
+         <p class="text-sm font-semibold text-black pt-1">
+  ₹ <%= listing.price %>
+<span class="font-normal text-gray-500">
+  / <%= listing.stayType ? listing.stayType : "Any Day Night" %>
+</span>
+</p>
 
         </div>
 

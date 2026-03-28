@@ -5,7 +5,7 @@
     <!-- Logo -->
     <a href="/listings" class="flex items-center gap-2">
       <i class="fa-brands fa-airbnb text-[#FF385C] text-2xl"></i>
-      <span class="text-[#FF385C] font-bold text-xl hidden sm:block">airbnb</span>
+      <span class="text-[#FF385C] font-bold text-xl hidden sm:block">Wonderlust</span>
     </a>
 
     <!-- Search -->
@@ -31,19 +31,19 @@
       <!-- Airbnb your home -->
       <a href="/listings"
         class="hidden md:block text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-100">
-        Airbnb your home
+        Wonderlust your home
       </a>
 
       <!-- Profile Pill (Desktop Dropdown Trigger) -->
       <button id="profileBtn"
-        class="hidden md:flex items-center gap-3 border border-gray-300 rounded-full px-3 py-1 hover:shadow-md">
+        class="hidden md:flex items-center cursor-pointer gap-3 border border-gray-300 rounded-full px-3 py-1 hover:shadow-md">
         <i class="fa-solid fa-bars text-sm"></i>
         <i class="fa-solid fa-user-circle text-2xl text-gray-500"></i>
       </button>
 
       <!-- Mobile Menu Button -->
       <button id="menuBtn"
-        class="md:hidden p-2 rounded-full hover:bg-gray-100">
+        class="md:hidden cursor-pointer p-2 rounded-full hover:bg-gray-100">
         <i class="fa-solid fa-bars text-xl"></i>
       </button>
 
@@ -52,14 +52,17 @@
         class="hidden absolute right-0 top-14 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-3">
 
         <a href="/listings" class="block px-4 py-2 text-sm hover:bg-gray-100">Home</a>
-        <a href="/listings" class="block px-4 py-2 text-sm hover:bg-gray-100">Airbnb Listings</a>
+        <a href="/listings" class="block px-4 py-2 text-sm hover:bg-gray-100">Wonderlust Listings</a>
         <a href="/listings/new" class="block px-4 py-2 text-sm hover:bg-gray-100">Create New Listing</a>
         <a href="/contact" class="block px-4 py-2 text-sm hover:bg-gray-100">Contact</a>
 
         <hr class="my-2">
-
-        <a href="/login" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
+       <% if(!currUser){ %>
+    <a href="/login" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
         <a href="/signup" class="block px-4 py-2 text-sm hover:bg-gray-100">Signup</a>
+         <%}%> <% if(currUser){ %>
+         <a href="/logout" class="block px-4 py-2 text-sm hover:bg-gray-100">Logout</a>
+         <% } %>
       </div>
 
     </div>
@@ -74,7 +77,7 @@
     </a>
 
     <a href="/listings" class="flex items-center gap-3 text-sm font-medium">
-      <i class="fa-brands fa-airbnb"></i> Airbnb Listings
+      <i class="fa-brands fa-airbnb"></i> Wonderlust Listings
     </a>
 
     <a href="/listings/new" class="flex items-center gap-3 text-sm font-medium">
@@ -87,13 +90,20 @@
 
     <hr>
 
-    <a href="/login" class="flex items-center gap-3 text-sm font-medium">
+   <% if(!currUser) {%> 
+ <a href="/login" class="flex items-center gap-3 text-sm font-medium">
       <i class="fa-solid fa-right-to-bracket"></i> Login
     </a>
 
     <a href="/signup" class="flex items-center gap-3 text-sm font-medium">
       <i class="fa-solid fa-user-plus"></i> Signup
     </a>
+     <% }%> 
+    <% if(currUser) {%>
+      <a href="/logout" class="flex items-center gap-3 text-sm font-medium">
+      <i class="fa-solid fa-user-plus"></i> Logout
+    </a>
+       <% }%>
 
   </div>
 </nav>

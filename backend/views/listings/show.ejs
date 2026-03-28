@@ -1,5 +1,25 @@
 <% layout("/layout/boilerplate") %>
+<% if (success && success.length) { %>
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800">
+    <span class="text-center">✅ <%= success[0] %></span>
+    <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900 cursor-pointer">
+      ✕
+    </button>
+  </div>
+<% } %>
 
+<% if (error && error.length) { %>
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800">
+    <span>❌ <%= error[0] %></span>
+    <button
+      type="button"
+      onclick="this.parentElement.remove()"
+      class="cursor-pointer text-red-700 hover:text-red-900"
+    >
+      ✕
+    </button>
+  </div>
+<% } %>
 <body class="bg-white">
 
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-8">
@@ -45,9 +65,11 @@
         <!-- PRICE -->
         <div class="mb-6">
           <span class="text-2xl font-semibold text-gray-900">
-            ₹ <%= listing.price.toLocaleString("en-IN") %>
+           ₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "0" %>
           </span>
-          <span class="text-gray-500 text-sm"> / night</span>
+      <span class="font-normal text-gray-500">
+  / <%= listing.stayType ? listing.stayType : "DEBUG-NOT-SET" %>
+</span>
         </div>
 
         <!-- DESCRIPTION -->
@@ -67,7 +89,9 @@
 
         <p class="text-lg font-semibold text-gray-900 mb-4">
           ₹ <%= listing.price.toLocaleString("en-IN") %>
-          <span class="text-sm font-normal text-gray-500"> / night</span>
+  <span class="font-normal text-gray-500">
+  / <%= listing.stayType ? listing.stayType : "Any Day Any Night" %>
+</span>
         </p>
 
         <a
@@ -94,5 +118,138 @@
     </div>
 
   </div>
+
+
+<!-- Review Section -->
+<div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <hr class="mb-6 sm:mb-8 border-gray-200">
+  <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-5 sm:mb-6">
+    Write a Review
+  </h3>
+
+  <form 
+    class="space-y-5 sm:space-y-6"
+    action="/listings/<%= listing._id %>/reviews" 
+    method="POST"
+  >
+
+    <!-- Rating -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Rating
+      </label>
+
+      <input 
+        type="range"
+        min="1"
+        max="5"
+        name="review[rating]"
+        class="w-full accent-blue-600"
+        required
+      >
+
+      <div class="flex justify-between text-xs text-gray-500 mt-1">
+        <span>Poor</span>
+        <span>Excellent</span>
+      </div>
+    </div>
+
+    <!-- Review -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Review
+      </label>
+
+      <textarea
+        rows="4"
+        required
+        name="review[comment]"
+        placeholder="What did you like or dislike?"
+        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base focus:outline-none focus:border-blue-600 resize-none"
+      ></textarea>
+    </div>
+
+    <!-- Submit -->
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base font-medium px-6 py-3 sm:py-2 rounded-md transition cursor-pointer"
+      >
+        Submit
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+<!-- Show Reviews Section -->
+<div class="max-w-6xl mx-auto mt-10 px-4 sm:px-6">
+  <hr class="mb-6 border-gray-200">
+
+  <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-6">
+    All Reviews
+  </h3>
+
+  <ul class="space-y-4 sm:space-y-5">
+
+    <% for (let review of listing.reviews) { %>
+      <li class="border border-gray-200 rounded-lg p-4 sm:p-5">
+
+        <!-- Rating + Date -->
+        <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+
+          <!-- Rating -->
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-medium text-gray-700">
+              Rating
+            </span>
+
+            <div class="flex text-yellow-400 text-sm sm:text-base">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <% if (i <= review.rating) { %>
+                  <span>★</span>
+                <% } else { %>
+                  <span class="text-gray-300">★</span>
+                <% } %>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- Date -->
+          <span class="text-xs sm:text-sm text-gray-500">
+            <%= new Date(review.createdAt).toLocaleDateString("en-IN", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric"
+            }) %>
+          </span>
+
+        </div>
+
+        <!-- Comment -->
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed break-words">
+          <%= review.comment %>
+        </p>
+ <form 
+  action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" 
+  method="POST"
+>
+ <button
+  class="px-3 py-1.5 text-sm font-medium
+         border border-red-600 text-red-600 rounded-md
+         hover:bg-red-600 hover:text-white
+         mt-2
+         transition duration-200 cursor-pointer"
+>
+  Delete
+</button>
+</form>
+      </li>
+      
+    <% } %>
+  
+  </ul>
+</div>
 
 </body>

@@ -2,7 +2,7 @@
 
 <body class="bg-white">
 
-  <div class="max-w-4xl mx-auto px-4 md:px-6 py-10">
+  <div class="max-w-4xl mx-auto px-4 md:px-6 py-10 mb-20">
 
     <!-- PAGE TITLE -->
     <div class="mb-8">
@@ -16,6 +16,7 @@
 
     <!-- FORM -->
     <form
+      id="editForm"
       action="/listings/<%= editListing._id %>?_method=PUT"
       method="POST"
       class="space-y-8"
@@ -27,12 +28,15 @@
           Title
         </label>
         <input
+          id="editTitle"
           type="text"
           name="listing[title]"
           value="<%= editListing.title %>"
-          class="w-full border-b border-gray-300 focus:border-black outline-none py-2 text-gray-900"
-          required
+          class="w-full border-b border-gray-300 py-2 outline-none focus:border-black"
         />
+        <p id="error-editTitle" class="text-sm text-red-500 mt-1 hidden">
+          Title is required
+        </p>
       </div>
 
       <!-- DESCRIPTION -->
@@ -41,11 +45,14 @@
           Description
         </label>
         <textarea
+          id="editDescription"
           name="listing[description]"
-          rows="0"
-          class="w-full border-b border-gray-300 focus:border-black outline-none py-2 text-gray-900 resize-none"
-          required
+          rows="2"
+          class="w-full border-b border-gray-300 py-2 outline-none focus:border-black resize-none"
         ><%= editListing.description %></textarea>
+        <p id="error-editDescription" class="text-sm text-red-500 mt-1 hidden">
+          Description is required
+        </p>
       </div>
 
       <!-- IMAGE -->
@@ -54,12 +61,15 @@
           Image URL
         </label>
         <input
+          id="editImage"
           type="text"
           name="listing[image]"
           value="<%= editListing.image %>"
-          class="w-full border-b border-gray-300 focus:border-black outline-none py-2 text-gray-900"
-          required
+          class="w-full border-b border-gray-300 py-2 outline-none focus:border-black"
         />
+        <p id="error-editImage" class="text-sm text-red-500 mt-1 hidden">
+          Image URL is required
+        </p>
       </div>
 
       <!-- PRICE -->
@@ -68,12 +78,15 @@
           Price (per night)
         </label>
         <input
+          id="editPrice"
           type="number"
           name="listing[price]"
           value="<%= editListing.price %>"
-          class="w-full border-b border-gray-300 focus:border-black outline-none py-2 text-gray-900"
-          required
+          class="w-full border-b border-gray-300 py-2 outline-none focus:border-black"
         />
+        <p id="error-editPrice" class="text-sm text-red-500 mt-1 hidden">
+          Price is required
+        </p>
       </div>
 
       <!-- LOCATION -->
@@ -82,12 +95,15 @@
           Location
         </label>
         <input
+          id="editLocation"
           type="text"
           name="listing[location]"
           value="<%= editListing.location %>"
-          class="w-full border-b border-gray-300 focus:border-black outline-none py-2 text-gray-900"
-          required
+          class="w-full border-b border-gray-300 py-2 outline-none focus:border-black"
         />
+        <p id="error-editLocation" class="text-sm text-red-500 mt-1 hidden">
+          Location is required
+        </p>
       </div>
 
       <!-- COUNTRY -->
@@ -96,26 +112,63 @@
           Country
         </label>
         <input
+          id="editCountry"
           type="text"
           name="listing[country]"
           value="<%= editListing.country %>"
-          class="w-full border-b border-gray-300 focus:border-black outline-none py-2 text-gray-900"
-          required
+          class="w-full border-b border-gray-300 py-2 outline-none focus:border-black"
         />
+        <p id="error-editCountry" class="text-sm text-red-500 mt-1 hidden">
+          Country is required
+        </p>
       </div>
 
-      <!-- ACTION BUTTON -->
+      <!-- BUTTON -->
       <div class="pt-6">
         <button
           type="submit"
-          class="bg-[#FF385C] text-white cursor-pointer px-8 py-3 rounded-lg font-medium hover:bg-[#e0314f] transition"
+          class="bg-[#FF385C] text-white px-8 py-3 cursor-pointer rounded-lg font-medium hover:bg-[#e0314f] transition"
         >
           Update listing
         </button>
       </div>
 
     </form>
-
   </div>
+
+  <!-- CLIENT SIDE VALIDATION -->
+  <script>
+    const form = document.getElementById("editForm");
+
+    form.addEventListener("submit", function (e) {
+      let isValid = true;
+
+      const fields = [
+        "editTitle",
+        "editDescription",
+        "editPrice",
+        "editLocation",
+        "editCountry",
+      ];
+
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        const error = document.getElementById(`error-${id}`);
+
+        if (!input.value.trim()) {
+          input.classList.add("border-red-500");
+          error.classList.remove("hidden");
+          isValid = false;
+        } else {
+          input.classList.remove("border-red-500");
+          error.classList.add("hidden");
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+      }
+    });
+  </script>
 
 </body>

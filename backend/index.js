@@ -1,81 +1,88 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
-const PORT = 8080;
 const path = require("path");
-const Listing = require("./model/Listing.js");
 const methodOverride = require("method-override");
-const ejsMate=require("ejs-mate");
+const ejsMate = require("ejs-mate");
+const session = require("express-session");
+const passport =require("passport");
+const passportLocal =require("passport-local");
+const User =require("./model/User.js");
 
-app.engine("ejs",ejsMate);
-app.use(methodOverride("_method"));
+
+const flash = require("connect-flash");
+// ================= SESSION =================
+app.use(
+  session({
+    secret: "keyboard-cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+const listingRoute = require("./routes/listingRoute");
+const reviewRoute = require("./routes/reviewRoute");
+const userRoute = require("./routes/userRoute");
+const connectDb = require("./db/db");
+
+const PORT = 8080;
+
+// ================= VIEW ENGINE =================
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+// ================= MIDDLEWARES =================
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
-const main = async () => {
-  try {
-    const conn = await mongoose.connect("mongodb://127.0.0.1:27017/wonderlust");
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (err) {
-    console.error("MongoDB connection error:", err);
-  }
-};
 
-//All Listings
-app.get("/listings", async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
+
+app.use(flash());
+
+// ================= FLASH LOCALS =================
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser =req.user;
+  next();
 });
 
-//Listings Form
-app.get("/listings/new", (req, res) => {
-  res.render("listings/new.ejs");
+// ================= ROUTES =================
+app.use("/listings", listingRoute);
+app.use("/listings/:id/reviews", reviewRoute);
+app.use("/", userRoute);
+
+app.get("/contact", (req, res) => {
+  res.render("listings/contact.ejs");
 });
 
-//show Individual Listing
-app.get("/listings/:id", async (req, res) => {
-  const listingId = req.params.id;
-  const singleListings = await Listing.findById(listingId);
-  res.render("listings/show.ejs", { listing: singleListings });
+
+
+
+
+
+
+
+// ================= GLOBAL ERROR HANDLER =================
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Something went wrong" } = err;
+  res.status(status).render("listings/error.ejs", { status, message });
 });
 
-//post Listing
-app.post("/listings", async (req, res) => {
-  let listing = req.body.listing;
-  console.log(listing);
-  let createListing = new Listing(listing);
-  await createListing.save();
-  res.redirect("/listings");
-});
-
-//edit form route
-app.get("/listings/:id/edit", async (req, res) => {
-  const listingId = req.params.id;
-  const editListing = await Listing.findById(listingId);
-  res.render("listings/edit.ejs", { editListing });
-});
-
-//Update Listing
-app.put("/listings/:id", async (req, res) => {
-  const id = req.params.id;
-  const updateListing = await Listing.findByIdAndUpdate(id, req.body.listing, {
-    runValidators: true,
-    new: true,
-  });
-  res.redirect(`/listings/${id}`);
-});
-
-//Delete Listing
-app.delete("/listings/:id", async (req, res) => {
-  const id = req.params.id;
-  const deleteListing = await Listing.findByIdAndDelete(id);
-  console.log(deleteListing);
-  res.redirect("/listings");
-});
-
+// ================= SERVER =================
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  main();
+  console.log(`Server running on port ${PORT}`);
+  connectDb();
 });
+
