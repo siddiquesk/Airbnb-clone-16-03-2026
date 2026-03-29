@@ -1,0 +1,115 @@
+<% layout("/layout/boilerplate") %>
+
+<!-- Flash Messages -->
+<% if (success && success.length) { %>
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800">
+    <span>✅ <%= success[0] %></span>
+    <button onclick="this.parentElement.remove()" class="cursor-pointer">✕</button>
+  </div>
+<% } %>
+
+<% if (error && error.length) { %>
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800">
+    <span>❌ <%= error[0] %></span>
+    <button onclick="this.parentElement.remove()" class="cursor-pointer">✕</button>
+  </div>
+<% } %>
+
+<!-- Page Heading -->
+<div class="text-center mb-6 mt-4">
+  <h1 class="text-3xl md:text-4xl font-semibold text-gray-900">
+    Search Your Perfect Stay
+  </h1>
+  <p class="mt-3 text-gray-500 text-sm md:text-base max-w-2xl mx-auto">
+    Find homes, rentals, and stays by name — simple, fast, and reliable.
+  </p>
+</div>
+
+<!-- Search Box -->
+<form action="/search" method="GET" class="mb-10">
+  <div class="max-w-2xl mx-auto relative">
+    <input
+      type="text"
+      name="q"
+      value="<%= q || '' %>"
+      placeholder="Search by stay name..."
+      class="w-full rounded-full border border-gray-300 px-6 py-4 text-base
+             focus:outline-none focus:border-[#FF385C]"
+    />
+    <button
+      type="submit"
+      class="absolute right-2 top-1/2 -translate-y-1/2
+             bg-[#FF385C] text-white px-6 py-2 rounded-full
+             hover:bg-[#e0314f] transition cursor-pointer"
+    >
+      Search
+    </button>
+  </div>
+</form>
+
+<!-- Listings -->
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+  <!-- Result Heading -->
+  <h2 class="text-lg font-semibold text-gray-800 mb-6">
+    <%= q ? `Results for "${q}"` : "All Listings" %>
+  </h2>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+    <% if (listings.length === 0) { %>
+      <p class="text-gray-500 col-span-full text-center">
+        No listings found.
+      </p>
+    <% } %>
+
+    <% for (let listing of listings) { %>
+
+      <!-- CARD (Same as index.ejs) -->
+      <a href="/listings/<%= listing._id %>"
+        class="group block rounded-xl overflow-hidden">
+
+        <div class="relative aspect-square overflow-hidden rounded-xl">
+
+          <img
+            src="<%= listing.image.url %>"
+            alt="<%= listing.title %>"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition"></div>
+
+          <div class="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-full p-2">
+            <i class="fa-regular fa-heart text-gray-700"></i>
+          </div>
+        </div>
+
+        <div class="pt-3 space-y-1">
+
+        
+
+          <p class="text-sm  font-semibold ">
+            <%= listing.title %>
+          </p>
+  <h3 class="text-sm line-clamp-1 text-red-900">
+            <%= listing.location %>, <%= listing.country %>
+          </h3>
+          <p class="text-sm text-gray-500 line-clamp-2">
+            <%= listing.description %>
+          </p>
+
+          <p class="text-sm font-semibold text-black pt-1">
+            ₹ <%= listing.price %>
+            <span class="font-normal text-gray-500">
+              / <%= listing.stayType || "Any Day Night" %>
+            </span>
+          </p>
+
+        </div>
+      </a>
+
+    <% } %>
+
+  </div>
+</div>

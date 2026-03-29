@@ -23,12 +23,11 @@ const listingForm = (req, res, next) => {
 // ================= SHOW =================
 const showListing = async (req, res, next) => {
   try {
-    const listing = await Listing.findById(req.params.id).populate("reviews");
-
+    const listing = await Listing.findById(req.params.id).populate({path:"reviews",populate:{path:"author"}}).populate("owner");
+   
     if (!listing) {
       throw new ExpressError("Listing Does Not Exist", 404);
     }
-
     res.render("listings/show.ejs", { listing });
   } catch (err) {
     next(err);
@@ -38,9 +37,12 @@ const showListing = async (req, res, next) => {
 // ================= CREATE =================
 const createListing = async (req, res, next) => {
   try {
+    let url =req.file.path;
+    let fileName =req.file.filename;
     const newListing = new Listing(req.body.listing);
+    newListing.owner =req.user._id;
+    newListing.image={url,fileName};
     await newListing.save();
-
     req.flash("success", "New Listing Created Successfully");
     res.redirect("/listings");
   } catch (err) {
@@ -66,12 +68,19 @@ const editListingForm = async (req, res, next) => {
 // ================= UPDATE =================
 const editListing = async (req, res, next) => {
   try {
+    const {id}= req.params;
     const updatedListing = await Listing.findByIdAndUpdate(
-      req.params.id,
+     id,
       req.body.listing,
       { runValidators: true, new: true }
     );
-
+    if(typeof req.file !=="undefined"){
+    let url =req.file.path;
+    let fileName =req.file.filename;
+     updatedListing.image={url,fileName};
+     await updatedListing.save()
+    }
+  
     if (!updatedListing) {
       throw new ExpressError("Listing Not Found", 404);
     }
@@ -98,6 +107,7 @@ const destroyListing = async (req, res, next) => {
     next(err);
   }
 };
+
 
 module.exports = {
   getListing,

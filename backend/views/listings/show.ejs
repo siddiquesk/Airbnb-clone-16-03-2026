@@ -23,17 +23,18 @@
 <body class="bg-white">
 
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-8">
-
+<span class="inline-flex items-center gap-1.5 
+             bg-[#FF385C]/10 text-[#FF385C] 
+             text-xs font-semibold 
+             px-3 py-1.5 rounded-full mt-2">
+  <i class="fa-solid fa-user text-[11px]"></i>
+  Hosted by <%= listing.owner.username %>
+</span>
     <!-- TITLE + LOCATION -->
     <div class="mb-5">
       <h1 class="text-2xl md:text-3xl font-semibold text-gray-900">
         <%= listing.title %>
       </h1>
-
-      <p class="text-gray-600 mt-1 text-sm">
-        <i class="fa-solid fa-location-dot mr-1"></i>
-        <%= listing.location %>, <%= listing.country %>
-      </p>
     </div>
 
     <!-- IMAGE GRID (AIRBNB STYLE) -->
@@ -42,7 +43,7 @@
       <!-- MAIN IMAGE -->
       <div class="h-[280px] sm:h-[340px] md:h-[420px]">
         <img
-          src="<%= listing.image %>"
+          src="<%= listing.image.url %>"
           alt="<%= listing.title %>"
           class="w-full h-full object-cover"
         />
@@ -50,14 +51,14 @@
 
       <!-- SIDE IMAGES -->
       <div class="hidden md:grid grid-rows-2 gap-3 h-[420px]">
-        <img src="<%= listing.image %>" class="w-full h-full object-cover" />
-        <img src="<%= listing.image %>" class="w-full h-full object-cover" />
+        <img src="<%= listing.image.url %>" class="w-full h-full object-cover" />
+        <img src="<%= listing.image.url %>" class="w-full h-full object-cover" />
       </div>
 
     </div>
 
     <!-- CONTENT AREA -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mx-6">
 
       <!-- LEFT CONTENT -->
       <div class="md:col-span-2">
@@ -71,7 +72,10 @@
   / <%= listing.stayType ? listing.stayType : "DEBUG-NOT-SET" %>
 </span>
         </div>
-
+    <p class="text-gray-600 mt-1 text-sm mb-2">
+        <i class="fa-solid fa-location-dot mr-1"></i>
+        <%= listing.location %>, <%= listing.country %>
+      </p>
         <!-- DESCRIPTION -->
         <div class="border-t border-gray-200 pt-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-3">
@@ -85,6 +89,9 @@
       </div>
 
       <!-- RIGHT ACTION BOX (AIRBNB STYLE) -->
+
+
+  <%if (currUser && currUser._id.equals(listing.owner._id)) {%>
       <div class="border border-gray-200 rounded-xl p-5 h-fit sticky top-28">
 
         <p class="text-lg font-semibold text-gray-900 mb-4">
@@ -114,13 +121,14 @@
         </form>
 
       </div>
-
+   <% } %>
     </div>
 
   </div>
 
 
 <!-- Review Section -->
+ <% if(currUser) {%>
 <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
   <hr class="mb-6 sm:mb-8 border-gray-200">
   <h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-5 sm:mb-6">
@@ -182,7 +190,9 @@
   </form>
 
 </div>
+ <% }%>
 
+ 
 <!-- Show Reviews Section -->
 <div class="max-w-6xl mx-auto mt-10 px-4 sm:px-6">
   <hr class="mb-6 border-gray-200">
@@ -196,16 +206,17 @@
     <% for (let review of listing.reviews) { %>
       <li class="border border-gray-200 rounded-lg p-4 sm:p-5">
 
-        <!-- Rating + Date -->
-        <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+        <!-- Top: Author + Date -->
+        <div class="flex items-start justify-between mb-2">
 
-          <!-- Rating -->
-          <div class="flex items-center gap-2">
-            <span class="text-sm font-medium text-gray-700">
-              Rating
-            </span>
-
-            <div class="flex text-yellow-400 text-sm sm:text-base">
+          <!-- Left -->
+          <div>
+            <!-- Author -->
+            <p class="text-base sm:text-lg font-bold text-gray-800">
+              <%= review.author.username %>
+            </p>
+            <!-- Rating -->
+            <div class="flex text-yellow-400 text-sm sm:text-base mt-1">
               <% for (let i = 1; i <= 5; i++) { %>
                 <% if (i <= review.rating) { %>
                   <span>★</span>
@@ -224,32 +235,31 @@
               year: "numeric"
             }) %>
           </span>
-
         </div>
 
         <!-- Comment -->
         <p class="text-sm sm:text-base text-gray-600 leading-relaxed break-words">
           <%= review.comment %>
         </p>
- <form 
-  action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" 
-  method="POST"
->
- <button
-  class="px-3 py-1.5 text-sm font-medium
-         border border-red-600 text-red-600 rounded-md
-         hover:bg-red-600 hover:text-white
-         mt-2
-         transition duration-200 cursor-pointer"
->
-  Delete
-</button>
-</form>
+
+        <!-- Delete Button -->
+        <form 
+          action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" 
+          method="POST"
+        >
+          <button
+            class="mt-2 px-3 py-1.5 text-sm font-medium
+                   border border-red-600 cursor-pointer text-red-600 rounded-md
+                   hover:bg-red-600 hover:text-white
+                   transition duration-200"
+          >
+            Delete
+          </button>
+        </form>
+
       </li>
-      
     <% } %>
-  
+
   </ul>
 </div>
 
-</body>

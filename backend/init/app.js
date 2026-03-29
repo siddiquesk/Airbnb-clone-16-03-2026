@@ -14,10 +14,10 @@ const main = async () => {
 const initDb = async () => {
   await Listing.deleteMany({});
 
-  // ✅ DO NOT use insertMany (middleware skip hota hai)
   for (let data of initData.data) {
+    data.owner = new mongoose.Types.ObjectId("69c94897656b407a3bf40c03");
     const listing = new Listing(data);
-    await listing.save(); // pre("save") runs here
+    await listing.save();
   }
 
   console.log("Database initialized with sample data");

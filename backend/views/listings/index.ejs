@@ -46,7 +46,7 @@
 
           <!-- Image -->
           <img
-            src="<%= listing.image %>"
+            src="<%= listing.image.url %>"
             alt="<%= listing.title %>"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -66,15 +66,15 @@
         <!-- Card Content -->
         <div class="pt-3 space-y-1">
 
-          <!-- Location -->
-          <h3 class="text-sm font-semibold">
-            <%= listing.location %>, <%= listing.country %>
-          </h3>
-
+       
           <!-- Title -->
-          <p class="text-sm text-gray-500 line-clamp-1">
+          <p class="text-sm font-semibold">
             <%= listing.title %>
           </p>
+   <!-- Location -->
+          <h3 class="text-sm  text-red-900 line-clamp-1">
+            <%= listing.location %>, <%= listing.country %>
+          </h3>
 
           <!-- Description -->
           <p class="text-sm text-gray-500 line-clamp-2">

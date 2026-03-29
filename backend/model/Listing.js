@@ -13,13 +13,8 @@ const listingSchema = new Schema({
     required: true,
   },
   image: {
-    type: String,
-    default:
-      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=500&auto=format&fit=crop&q=60",
-    set: (v) =>
-      v === ""
-        ? "https://images.unsplash.com/photo-1606989254570-02aa0d7ea083?w=500&auto=format&fit=crop&q=60"
-        : v,
+   url:String,
+   filename:String,
   },
   price: Number,
 
@@ -42,7 +37,11 @@ const listingSchema = new Schema({
       type:Schema.Types.ObjectId,
       ref:"Review"
     }
-  ]
+  ],
+  owner:{
+    type:Schema.Types.ObjectId,
+    ref:"User",
+  }
 });
 
 // ✅ middleware: auto-assign random stayType

@@ -1,5 +1,7 @@
 const ExpressError = require("./utils/ExpressError");
 const { listingSchema, reviewSchema } = require("./joi/Schema");
+const Listing =require("./model/Listing");
+const Review =require("./model/Review");
 
 const validateListing = (req, res, next) => {
   const { error } = listingSchema.validate(req.body);
@@ -29,7 +31,7 @@ const isLoggedIn =async(req,res,next)=>{
     }
     next();
   }catch(err){
-   console.log(err);
+   next(err);
   }
 }
 
@@ -40,9 +42,39 @@ const savedUrl =(req,res,next)=>{
   next();
 }
 
+const isOwner =async(req,res,next)=>{
+  try{
+      const {id}= req.params;
+     const listing = await Listing.findById(id);
+   if (!listing.owner || !listing.owner._id.equals(req.user._id)) {
+      req.flash("error", "You are not the owner of this listing");
+      return res.redirect(`/listings/${id}`);
+    }
+    next();
+  }catch(err){
+
+  }
+}
+
+const isAuthor =async(req,res,next)=>{
+  try{
+      const {id,reviewId}= req.params;
+     const review = await Review.findById(reviewId);
+   if (!review.author || ! review.author._id.equals(req.user._id)) {
+      req.flash("error", "You are not the owner of this review");
+      return res.redirect(`/listings/${id}`);
+    }
+    next();
+  }catch(err){
+
+  }
+}
+
 module.exports = {
   validateListing,
   validateReview,
   isLoggedIn,
   savedUrl,
+  isOwner,
+  isAuthor,
 };

@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 const { createReview, deleteReview } = require("../controller/reviewController");
-const { validateReview } = require("../middleware");
+const { validateReview,isLoggedIn,isAuthor } = require("../middleware");
 
-router.post("/", validateReview, createReview);
-router.delete("/:reviewId", deleteReview);
+router.post("/",isLoggedIn,validateReview, createReview);
+router.delete("/:reviewId",isAuthor, deleteReview);
 
 module.exports = router;
