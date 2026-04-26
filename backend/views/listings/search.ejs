@@ -2,21 +2,21 @@
 
 <!-- Flash Messages -->
 <% if (success && success.length) { %>
-  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800">
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800 md:mt-16 mt-10">
     <span>✅ <%= success[0] %></span>
     <button onclick="this.parentElement.remove()" class="cursor-pointer">✕</button>
   </div>
 <% } %>
 
 <% if (error && error.length) { %>
-  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800">
+  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800 md:mt-16 mt-10">
     <span>❌ <%= error[0] %></span>
     <button onclick="this.parentElement.remove()" class="cursor-pointer">✕</button>
   </div>
 <% } %>
 
 <!-- Page Heading -->
-<div class="text-center mb-6 mt-4">
+<div class="text-center mb-6 md:mt-16 mt-10">
   <h1 class="text-3xl md:text-4xl font-semibold text-gray-900">
     Search Your Perfect Stay
   </h1>

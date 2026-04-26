@@ -29,3 +29,18 @@ module.exports.contacts= async (req, res, next) => {
   }
 };
 
+module.exports.About = (req, res, next) => {
+  try {
+    res.render("listings/about");
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.thankYou = (req, res, next) => {
+  try {
+    res.render("listings/thank-you");
+  } catch (err) {
+    next(err);
+  }
+};

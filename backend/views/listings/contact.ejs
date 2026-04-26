@@ -1,145 +1,266 @@
 <% layout("/layout/boilerplate") %>
 
-<!-- FULL BODY GRADIENT -->
-<div class="min-h-screen w-full flex  bg-gradient-to-br from-rose-100 via-orange-50 to-sky-100">
+<!-- HERO BANNER -->
+<section
+  class="relative w-screen h-[500px]">
+
+  <!-- Background Image -->
+  <img
+    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+    alt="Travel banner"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <!-- Content -->
+  <div class="relative h-full flex items-center">
+    <div class="max-w-6xl mx-auto px-6 text-white">
+
+      <h1 class="text-4xl md:text-5xl font-semibold mb-4">
+        Let’s Plan Something Amazing
+      </h1>
+
+      <p class="text-lg text-gray-200 max-w-2xl mb-6">
+        Need help with listings, bookings, or travel support?  
+        Our team is here to guide you every step of the way.
+      </p>
+
+      <div class="flex flex-wrap gap-4 text-sm">
+        <span class="bg-white/10 px-4 py-2 rounded-md">✔ Travel Support</span>
+        <span class="bg-white/10 px-4 py-2 rounded-md">✔ Listing Assistance</span>
+        <span class="bg-white/10 px-4 py-2 rounded-md">✔ Quick Response</span>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+
+<!-- FULL PAGE -->
+<div class="min-h-screen w-full">
 
   <!-- CONTENT WRAPPER -->
-  <div class="max-w-7xl mx-auto px-6 py-20">
+  <div class="max-w-6xl mx-auto px-6 py-16">
 
     <!-- PAGE HEADER -->
-    <div class="text-center mb-20">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl font-semibold">
         Contact Wonderlust
       </h1>
-      <p class="text-gray-600 mt-4 text-lg max-w-2xl mx-auto">
-        We’d love to hear from you. Reach out to Wonderlust for travel support,
-        listing help, or general queries.
+      <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">
+        Have questions or need help? Fill out the form and we’ll get back to you.
       </p>
     </div>
 
-    <!-- MAP + CONTACT -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 mb-24">
+    <!-- MAP + FORM -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
 
       <!-- MAP -->
-      <div class="rounded-xl overflow-hidden ">
+      <div class="border border-gray-200 rounded-lg overflow-hidden">
         <iframe
-          class="w-full h-[450px]"
+          class="w-full h-[400px]"
           src="https://www.google.com/maps?q=Delhi&output=embed"
           loading="lazy"
         ></iframe>
       </div>
 
-      <!-- CONTACT CARD -->
-      <div class="bg-white rounded-xl -2xl p-10 flex flex-col justify-center">
+      <!-- CONTACT FORM -->
+    <div class="bg-white border border-gray-200 rounded-lg p-8">
 
-        <h2 class="text-3xl font-semibold text-gray-900 mb-8">
-          Contact Details
-        </h2>
+  <h2 class="text-2xl font-medium text-gray-900 mb-6">
+    Get in Touch
+  </h2>
 
-        <div class="space-y-6 text-lg text-gray-700">
+  <form
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    class="space-y-5"
+  >
 
-          <p>
-            <span class="font-semibold text-gray-900">👤 Name</span><br />
-            Sufiyan Siddique
-          </p>
+    <!-- Web3Forms Key -->
+    <input
+      type="hidden"
+      name="access_key"
+      value="217e27b9-13e8-4580-a754-72bef1029f6f"
+    >
 
-          <p>
-            <span class="font-semibold text-gray-900">📍 Address</span><br />
-            Shivaji Nagar, Govandi, Baigan Wadi<br />
-            Mumbai, Maharashtra – 400043
-          </p>
+    <!-- Redirect after submit -->
+  <input
+  type="hidden"
+  name="redirect"
+  value="http://localhost:8080/thank-you"
+/>
 
-          <p>
-            <span class="font-semibold text-gray-900">📞 Phone</span><br />
-            9769285713
-          </p>
+    <!-- Name -->
+    <div>
+      <label class="block text-sm text-gray-700 mb-1">Name</label>
+      <input
+        type="text"
+        name="name"
+        required
+        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-gray-900"
+        placeholder="Your name">
+    </div>
 
-          <p>
-            <span class="font-semibold text-gray-900">✉️ Email</span><br />
-            sufiyan9769285713@gmail.com
-          </p>
+    <!-- Email -->
+    <div>
+      <label class="block text-sm text-gray-700 mb-1">Email</label>
+      <input
+        type="email"
+        name="email"
+        required
+        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-gray-900"
+        placeholder="your@email.com">
+    </div>
 
-        </div>
+    <!-- Message -->
+    <div>
+      <label class="block text-sm text-gray-700 mb-1">Message</label>
+      <textarea
+        name="message"
+        rows="4"
+        required
+        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-gray-900"
+        placeholder="Write your message"></textarea>
+    </div>
 
-      </div>
+    <!-- Button -->
+    <button
+      type="submit"
+      class="w-full bg-gray-900 text-white py-2.5 rounded-md text-sm font-medium hover:bg-gray-800 transition cursor-pointer">
+      Send Message
+    </button>
+
+  </form>
+</div>
+
     </div>
 
     <!-- ABOUT -->
-    <div class="bg-white rounded-xl -2xl p-12 mb-24">
-      <h2 class="text-3xl font-semibold text-gray-900 mb-6">
-        About Wonderlust
-      </h2>
-      <p class="text-gray-700 text-lg leading-relaxed max-w-5xl">
-        Wonderlust is a next-generation travel listing platform inspired by
-        Airbnb. We help travelers find unique, affordable, and reliable stays
-        while allowing hosts to manage listings with ease. Our focus is
-        simplicity, transparency, and a delightful travel experience.
-      </p>
-    </div>
+   <div class="bg-white border border-gray-200 rounded-lg p-10 mb-20">
+  <h2 class="text-2xl font-medium text-gray-900 mb-4">
+    Why Choose Wonderlust?
+  </h2>
+
+  <p class="text-gray-700 leading-relaxed max-w-4xl mb-6">
+    Wonderlust stands out by offering a simple, transparent, and reliable
+    platform where travelers and property owners connect directly.
+    Unlike traditional travel portals, we focus on genuine listings,
+    ease of use, and meaningful connections.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed max-w-4xl mb-8">
+    Whether you want to explore villas, houses, or hotels—or list your own
+    property to reach the right audience—Wonderlust gives you complete
+    control without unnecessary complications or hidden costs.
+  </p>
+
+  <a
+    href="/listings"
+    class="inline-block bg-gray-900 text-white px-6 py-3 rounded-md text-sm font-medium
+           hover:bg-gray-800 transition">
+    Explore Our Listings
+  </a>
+</div>
 
     <!-- FAQ -->
-    <div class="bg-white rounded-xl -2xl p-12">
-      <h2 class="text-3xl font-semibold text-gray-900 mb-10">
-        Frequently Asked Questions
+    <div class="bg-white border border-gray-200 rounded-lg p-10">
+      <h2 class="text-2xl font-medium text-gray-900 mb-8">
+        FAQs
       </h2>
 
-      <div class="space-y-6">
+      <div class="space-y-4">
 
-        <details class="group border border-gray-200 rounded-xl p-6">
-          <summary class="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
+        <details class="border border-gray-200 rounded-md p-4">
+          <summary class="cursor-pointer font-medium text-gray-800">
             What is Wonderlust?
-            <span class="transition group-open:rotate-180">⌄</span>
           </summary>
-          <p class="mt-4 text-gray-600">
-            Wonderlust is a travel listing platform where users can explore and
-            manage stays across India and beyond.
+          <p class="mt-2 text-gray-600">
+            A travel listing platform for exploring and managing stays.
           </p>
         </details>
 
-        <details class="group border border-gray-200 rounded-xl p-6">
-          <summary class="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
-            Can I add my own property?
-            <span class="transition group-open:rotate-180">⌄</span>
+        <details class="border border-gray-200 rounded-md p-4">
+  <summary class="cursor-pointer font-medium text-gray-800">
+    What can I do on Wonderlust?
+  </summary>
+  <p class="mt-2 text-gray-600">
+    Wonderlust allows users to explore and choose villas, houses, and hotels
+    listed on the platform. You can easily browse stays and connect with
+    property owners for bookings or inquiries.
+  </p>
+</details>
+
+<details class="border border-gray-200 rounded-md p-4">
+  <summary class="cursor-pointer font-medium text-gray-800">
+    Can I list my own property on Wonderlust?
+  </summary>
+  <p class="mt-2 text-gray-600">
+    Yes, property owners can list their villas, houses, or hotels on Wonderlust.
+    By adding your property details, you can showcase it to travelers and reach
+    potential buyers or guests.
+  </p>
+</details>
+
+<details class="border border-gray-200 rounded-md p-4">
+  <summary class="cursor-pointer font-medium text-gray-800">
+    Does Wonderlust help connect buyers and property owners?
+  </summary>
+  <p class="mt-2 text-gray-600">
+    Absolutely. Wonderlust acts as a bridge between travelers and property
+    owners, helping them connect easily to explore stays, manage listings, and
+    promote properties for booking or sale.
+  </p>
+</details>
+        <details class="border border-gray-200 rounded-md p-4">
+          <summary class="cursor-pointer font-medium text-gray-800">
+            Can I list my property?
           </summary>
-          <p class="mt-4 text-gray-600">
-            Yes, you can easily add, edit, and delete your listings after
-            registration.
+          <p class="mt-2 text-gray-600">
+            Yes, registered users can add and manage listings easily.
           </p>
         </details>
 
-        <details class="group border border-gray-200 rounded-2xl p-6">
-          <summary class="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
-            Is Wonderlust free to use?
-            <span class="transition group-open:rotate-180">⌄</span>
+        <details class="border border-gray-200 rounded-md p-4">
+          <summary class="cursor-pointer font-medium text-gray-800">
+            Is it free to use?
           </summary>
-          <p class="mt-4 text-gray-600">
-            Yes, browsing and listing properties on Wonderlust is completely
-            free.
-          </p>
-        </details>
-
-        <details class="group border border-gray-200 rounded-xl p-6">
-          <summary class="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
-            Do you support bookings?
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-4 text-gray-600">
-            Booking features are being developed and will be launched soon.
-          </p>
-        </details>
-
-        <details class="group border border-gray-200 rounded-xl p-6">
-          <summary class="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
-            How can I contact support?
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-4 text-gray-600">
-            You can reach us via phone or email listed above for any assistance.
+          <p class="mt-2 text-gray-600">
+            Yes, Wonderlust is completely free to browse and list properties.
           </p>
         </details>
 
       </div>
     </div>
 
+
+
+<!-- CTA SECTION -->
+<section class="bg-gray-900 text-white mt-24">
+  <div class="max-w-6xl mx-auto px-6 py-20 text-center">
+
+    <h2 class="text-3xl md:text-4xl font-semibold mb-4">
+      Want to Sell or List Your Property?
+    </h2>
+
+    <p class="text-gray-300 max-w-2xl mx-auto mb-8 text-lg">
+      If you own a house, villa, or hotel, Wonderlust helps you showcase
+      your property to the right audience. Fill out a simple form and
+      get your listing live with ease.
+    </p>
+
+    <a
+      href="/listings/new"
+      class="inline-block bg-white text-gray-900 px-8 py-3 rounded-md text-sm font-semibold
+             hover:bg-gray-100 transition">
+      List Your Property
+    </a>
+
+  </div>
+</section>
   </div>
 </div>

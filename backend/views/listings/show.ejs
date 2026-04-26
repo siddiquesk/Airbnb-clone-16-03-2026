@@ -1,6 +1,6 @@
 <% layout("/layout/boilerplate") %>
 <% if (success && success.length) { %>
-  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800">
+  <div class="mb-4 mx-auto md:mt-16 mt-10 flex max-w-md items-center justify-between rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-800">
     <span class="text-center">✅ <%= success[0] %></span>
     <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900 cursor-pointer">
       ✕
@@ -9,7 +9,7 @@
 <% } %>
 
 <% if (error && error.length) { %>
-  <div class="mb-4 mx-auto flex max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800">
+  <div class="mb-4 mx-auto flex md:mt-16 mt-10  max-w-md items-center justify-between rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-800">
     <span>❌ <%= error[0] %></span>
     <button
       type="button"
@@ -22,7 +22,7 @@
 <% } %>
 <body class="bg-white">
 
-  <div class="max-w-7xl mx-auto px-4 md:px-6 py-8">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 mt-10">
 <span class="inline-flex items-center gap-1.5 
              bg-[#FF385C]/10 text-[#FF385C] 
              text-xs font-semibold 
